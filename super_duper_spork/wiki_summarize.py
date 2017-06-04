@@ -42,3 +42,19 @@ def fetch_article(search_term):
 
     response = urllib.request.urlopen(search_url + search_term)
     return response.read()
+
+def is_page_article(markup):
+    """
+    Determines if the given markup is for an article or search results page.
+    
+    Keyword arguments:
+    markup -- a string containing the markup for the page
+    
+    Returns:
+    True if the page is an article, or false if it is a search results page.
+    
+    """
+
+    soup = BeautifulSoup(markup, 'html.parser')
+
+    return soup.title.string.find('Search results') < 0
