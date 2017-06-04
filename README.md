@@ -10,3 +10,6 @@ Soup 4 and NLTK.
 
 ## Usage
 TODO
+
+## License
+MIT
