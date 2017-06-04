@@ -11,6 +11,7 @@ prepare_search_term(search_term) prepares a search term to be put in a url.
 """
 
 from bs4 import BeautifulSoup
+import urllib.request
 
 search_url = 'http://wikipedia.org/w/index.php?search='
 
@@ -26,3 +27,18 @@ def prepare_search_term(search_term):
     
     """
     return search_term.replace(' ', '+')
+
+def fetch_article(search_term):
+    """
+    Fetches an article from wikipedia using urllib.
+    
+    Keyword arguments:
+    search_term -- the processed search term.
+
+    Returns:
+    A String containing the page markup.
+
+    """
+
+    response = urllib.request.urlopen(search_url + search_term)
+    return response.read()
