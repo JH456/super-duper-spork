@@ -58,3 +58,21 @@ def is_page_article(markup):
     soup = BeautifulSoup(markup, 'html.parser')
 
     return soup.title.string.find('Search results') < 0
+
+def get_search_results(markup):
+    """
+    Gets the search results from a search results page.
+    
+    Keyword arguments:
+    markup -- a string containing the markup for the page
+
+    Returns:
+    An array of strings that are search suggestions. At most 20 in length.
+
+    """
+
+    soup = BeautifulSoup(markup, 'html.parser')
+
+    anchorTags = soup.select('div.mw-search-result-heading a')
+
+    return list(map(lambda x: x.attrs['title'], anchorTags))
