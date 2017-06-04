@@ -18,4 +18,9 @@ if __name__ == '__main__':
         if wiki_summarize.is_page_article(markup):
             print('article')
         else:
-            print(wiki_summarize.get_search_results(markup))
+            print("+---------------------------------------------")
+            print("| No article found! Here are some suggestions:")
+            print("+---------------------------------------------")
+            for suggestion in wiki_summarize.get_search_results(markup):
+                print("| - " + suggestion)
+            print("+---------------------------------------------")
