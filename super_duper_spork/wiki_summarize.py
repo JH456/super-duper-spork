@@ -1,4 +1,5 @@
-"""Super Duper Spork
+"""
+Wiki Summarize
 This module is for performing a search on wikipedia for an article, and printing
 a summary of it.
 
