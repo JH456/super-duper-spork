@@ -19,8 +19,8 @@ def print80(text):
             line += word + " "
         else:
             print(line)
-            line = ''
-            line_length = 0
+            line = word + ' '
+            line_length = len(word) + 1
     if line != '':
         print(line)
 
