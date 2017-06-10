@@ -69,7 +69,7 @@ def get_search_results(markup):
 
     return list(map(lambda x: x.attrs['title'], anchorTags))
 
-def extract_section_map(markup):
+def extract_sections(markup):
     """
     Gets a dict of section titles to section texts.
 
