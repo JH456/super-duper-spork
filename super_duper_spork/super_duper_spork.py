@@ -9,13 +9,28 @@ Usage:
 from sys import argv
 import wiki_summarize
 
+def print80(text):
+    words = text.split(' ')
+    line_length = 0
+    line = ''
+    for word in words:
+        if line_length + len(word) + 1 <= 80:
+            line_length += len(word) + 1
+            line += word + " "
+        else:
+            print(line)
+            line = ''
+            line_length = 0
+    if line != '':
+        print(line)
+
 def print_article_summary(markup):
     sections = wiki_summarize.extract_sections(markup)
     for title, text in sections:
         print('+' + '-' * 79)
         print('| ' + title)
         print('+' + '-' * 79)
-        print(text)
+        print80(text)
 
 def print_search_suggestions(markup):
     print('+' + '-' * 79)
