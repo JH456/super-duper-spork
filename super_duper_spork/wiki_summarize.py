@@ -68,3 +68,26 @@ def get_search_results(markup):
     anchorTags = soup.select('div.mw-search-result-heading a')
 
     return list(map(lambda x: x.attrs['title'], anchorTags))
+
+def extract_section_map(markup):
+    """
+    Gets a dict of section titles to section texts.
+
+    Returns:
+    A dict from strings to strings.
+
+    """
+    soup = BeautifulSoup(markup, 'html.parser')
+    contents = soup.select_one('.mw-parser-output').contents
+    text = []
+    title = soup.select_one('#firstHeading').get_text()
+    title_text_map = []
+    for content in contents:
+        if content.name == 'h2':
+            title_text_map.append((title, ''.join(text)))
+            text = []
+            title = content.get_text()
+        elif content.name == 'p':
+            text.append(content.get_text())
+    return list(filter(lambda e: e[1] != '', title_text_map))
+

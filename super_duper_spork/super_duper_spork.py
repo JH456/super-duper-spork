@@ -15,7 +15,9 @@ if __name__ == '__main__':
     else:
         markup = wiki_summarize.fetch_article(argv[1])
         if wiki_summarize.is_page_article(markup):
-            print('article')
+            sections = wiki_summarize.extract_section_map(markup)
+            for key, value in sections:
+                print(key)
         else:
             print("+---------------------------------------------")
             print("| No article found! Here are some suggestions:")
