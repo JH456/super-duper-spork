@@ -71,10 +71,10 @@ def get_search_results(markup):
 
 def extract_sections(markup):
     """
-    Gets a dict of section titles to section texts.
+    Gets a list of tuples in the form (title, text) for each article section.
 
     Returns:
-    A dict from strings to strings.
+    [(string, string)]
 
     """
     soup = BeautifulSoup(markup, 'html.parser')
