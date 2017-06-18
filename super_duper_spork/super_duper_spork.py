@@ -30,7 +30,7 @@ def print_article_summary(markup):
         print('+' + '-' * 78 + '+')
         print80(title)
         print('+' + '-' * 78 + '+')
-        print80(text)
+        print80(wiki_summarize.summarize_text(text))
     print('+' + '-' * 78 + '+')
 
 def print_search_suggestions(markup):

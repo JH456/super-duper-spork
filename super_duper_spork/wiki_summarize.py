@@ -91,3 +91,17 @@ def extract_sections(markup):
             text.append(content.get_text())
     return list(filter(lambda e: e[1] != '', title_text_map))
 
+def summarize_text(text):
+    """
+    Summarizes text
+
+    Keyword arguments:
+    text -- string
+
+    Returns:
+    A string which is the summarized text.
+
+    """
+
+    return text
+
