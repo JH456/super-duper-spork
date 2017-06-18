@@ -109,16 +109,48 @@ def summarize_text(text):
 
     """
 
+    def clean(words):
+        stop_words = set(nltk.corpus.stopwords.words('english'))
+        return [word for word in words
+                if word.lower() not in string.punctuation
+                and word.lower() not in stop_words]
+
     words = nltk.word_tokenize(text)
-    sentences = nltk.sent_tokenize(text)
+    sentences = list(nltk.sent_tokenize(text))
 
-    stop_words = set(nltk.corpus.stopwords.words('english'))
+    clean_words = clean(words)
 
-    clean_words = [word for word in words
-            if word.lower() not in string.punctuation
-            and word.lower() not in stop_words]
+    count_map = {}
 
-    print(clean_words)
+    for word in clean_words:
+        if word in count_map.keys():
+            count_map[word] += 1
+        else:
+            count_map[word] = 1
 
-    return ''
+    sentence_importance = []
+    i = 0
 
+    for sentence in sentences:
+        sentence_words = clean(nltk.word_tokenize(sentence))
+        importance = 0
+        for word in sentence_words:
+            importance += count_map[word]
+        sentence_importance.append((i, importance))
+        i += 1
+
+    sentence_importance = sorted(sentence_importance, key=lambda x: x[1],
+            reverse=True)
+
+    important_sentences = []
+    for j in range(3):
+        important_sentences.append(sentence_importance[j])
+
+    important_sentences = sorted(important_sentences, key=lambda x: x[0])
+
+    summary = ''
+
+    for sent in important_sentences:
+        summary += sentences[sent[0]]
+
+    return summary
