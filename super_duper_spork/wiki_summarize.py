@@ -6,12 +6,18 @@ a summary of it.
 Depends on bs4 and nltk.
 
 Functions:
-prepare_search_term(search_term) prepares a search term to be put in a url.
+fetch_article which fetches an article
+is_page_article which analyzes markup to determine if a page is an article
+get_search_results which extracts search results from markup
+extract_sections which gets the sections out of article markup
+summarize_text which summarizes text
 
 """
 
 from bs4 import BeautifulSoup
 import urllib.request
+import nltk
+import string
 
 search_url = 'http://wikipedia.org/w/index.php?search='
 
@@ -103,5 +109,16 @@ def summarize_text(text):
 
     """
 
-    return text
+    words = nltk.word_tokenize(text)
+    sentences = nltk.sent_tokenize(text)
+
+    stop_words = set(nltk.corpus.stopwords.words('english'))
+
+    clean_words = [word for word in words
+            if word.lower() not in string.punctuation
+            and word.lower() not in stop_words]
+
+    print(clean_words)
+
+    return ''
 
