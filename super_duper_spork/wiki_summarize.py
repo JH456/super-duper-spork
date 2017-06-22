@@ -41,21 +41,60 @@ def fetch_article(search_term):
     response = urllib.request.urlopen(search_url + search_term)
     return response.read()
 
-def is_page_article(markup):
+def is_page_search_results(markup):
     """
-    Determines if the given markup is for an article or search results page.
+    Determines if the given markup is for a search results page.
 
     Keyword arguments:
     markup -- a string containing the markup for the page
 
     Returns:
-    True if the page is an article, or false if it is a search results page.
+    True if the page is a search results page.
 
     """
 
     soup = BeautifulSoup(markup, 'html.parser')
 
-    return soup.title.string.find('Search results') < 0
+    return soup.title.string.find('Search results') >= 0
+
+def is_page_disambiguation(markup):
+    """
+    Determines if a page is a disambiguation page.
+
+    Keyword arguments:
+    markup -- a string containing the markup for the page
+
+    Returns:
+    True if the page is a disambiguation page.
+
+    """
+
+    soup = BeautifulSoup(markup, 'html.parser')
+
+    lis = soup.select("#mw-normal-catlinks li a")
+
+    return any(a.string.find('Disambiguation') >= 0 for a in lis)
+
+def get_disambiguation_results(markup):
+    """
+    Gets the disambiguation results from a disambiguation page.
+
+    Keyword arguments:
+    markup -- a string containing the markup for the page
+
+    Returns:
+    An array of strings that are pages the search term could refer to.
+
+    """
+
+    soup = BeautifulSoup(markup, 'html.parser')
+
+    anchorTags = soup.select('.mw-parser-output ul li a')
+
+    anchorTags = filter(lambda a: 'title' in a.attrs, anchorTags)
+
+    return map(lambda x: x.attrs['title'], anchorTags)
+
 
 def get_search_results(markup):
     """
@@ -143,7 +182,7 @@ def summarize_text(text):
             reverse=True)
 
     important_sentences = []
-    for j in range(3):
+    for j in range(min(3, len(sentence_importance))):
         important_sentences.append(sentence_importance[j])
 
     important_sentences = sorted(important_sentences, key=lambda x: x[0])
