@@ -38,7 +38,7 @@ def print_disambiguation(markup):
     print80("Your search may refer to:")
     print('+' + '-' * 78 + '+')
     for suggestion in wiki_summarize.get_disambiguation_results(markup):
-        print("| - " + suggestion)
+        print80("- " + suggestion)
     print('+' + '-' * 78 + '+')
 
 def print_search_suggestions(markup):
@@ -46,7 +46,7 @@ def print_search_suggestions(markup):
     print80("No article found! Here are some suggestions:")
     print('+' + '-' * 78 + '+')
     for suggestion in wiki_summarize.get_search_results(markup):
-        print("| - " + suggestion)
+        print80("- " + suggestion)
     print('+' + '-' * 78 + '+')
 
 if __name__ == '__main__':
