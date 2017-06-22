@@ -18,6 +18,7 @@ from bs4 import BeautifulSoup
 import urllib.request
 import nltk
 import string
+import re
 
 search_url = 'http://wikipedia.org/w/index.php?search='
 
@@ -133,7 +134,9 @@ def extract_sections(markup):
             text = []
             title = content.get_text()
         elif content.name == 'p':
-            text.append(content.get_text())
+            p_text = content.get_text()
+            p_text = p_text.replace('.', '. ')
+            text.append(p_text)
     return list(filter(lambda e: e[1] != '', title_text_map))
 
 def summarize_text(text):
@@ -192,4 +195,4 @@ def summarize_text(text):
     for sent in important_sentences:
         summary += sentences[sent[0]]
 
-    return summary
+    return summary.replace('.', '. ').replace('  ', ' ')
